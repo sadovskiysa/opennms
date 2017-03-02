@@ -36,6 +36,10 @@ With the following properties (defaults shown will be used if file is not presen
 |`archiveOldAlarmValues`    | true                  | For alarm change events, we can choose to archive the detailed alarm values but this is expensive. Set false in production.
 |`archiveNewAlarmValues`    | true                  | 
 |`logAllEvents`             | false                 | If changed to true, then archive all events even if they have not been persisted in the OpenNMS database.
+|`archiveAssetData`             | true                | If true The following attributes representing useful node asset fields from the node asset table are included in archived events and alarms. These are included only where the values are not null or empty strings in the table. 
+
+(asset-latitude,asset-longitude,asset-region,asset-building,asset-floor,asset-room,asset-rack,asset-slot,asset-port,asset-category,asset-displaycategory,asset-notifycategory,asset-pollercategory,asset-thresholdcategory,asset-managedobjecttype,asset-managedobjectinstance,asset-manufacturer,asset-vendor,asset-modelnumber,parent-nodelabel,parent-nodeid,parent-foreignsource,parent-foreignid)
+
 |`batchSize`                | 1                     | Increase this value to enable batch inserts into Elasticsearch. This is the maximum size of a batch of events that is sent to Elasticsearch in a single connection.
 |`batchInterval`            | 0                     | This value specifies the maximum time interval between batch events (recommended: 500ms).
 |===

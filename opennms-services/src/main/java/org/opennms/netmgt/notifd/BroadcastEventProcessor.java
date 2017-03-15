@@ -314,10 +314,10 @@ public final class BroadcastEventProcessor implements EventListener {
             if (processed) {
                 return;
             }
-            final AutoAcknowledgeAlarm autoAck = getNotifdConfigManager().getConfiguration().getAutoAcknowledgeAlarm();
-            if (autoAck == null) {
+            if (!getNotifdConfigManager().getConfiguration().getAutoAcknowledgeAlarm().isPresent()) {
                 return;
             }
+            final AutoAcknowledgeAlarm autoAck = getNotifdConfigManager().getConfiguration().getAutoAcknowledgeAlarm().get();
             if (!autoAck.getUeiCollection().isEmpty() && !autoAck.getUeiCollection().contains(event.getUei())) {
                 return;
             }

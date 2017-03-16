@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -292,8 +293,8 @@ public class AmiConfig implements Serializable {
      *
      * @return the value of field 'Password'.
      */
-    public String getPassword() {
-        return this._password;
+    public Optional<String> getPassword() {
+        return Optional.ofNullable(this._password);
     }
 
     /**
@@ -303,7 +304,7 @@ public class AmiConfig implements Serializable {
      *
      * @return the value of field 'Port'.
      */
-    public int getPort() {
+    public Integer getPort() {
         return _port == null ? 5038 : _port;
     }
 
@@ -314,7 +315,7 @@ public class AmiConfig implements Serializable {
      *
      * @return the value of field 'Retry'.
      */
-    public int getRetry() {
+    public Integer getRetry() {
         return _retry == null ? 0 : _retry;
     }
 
@@ -325,7 +326,7 @@ public class AmiConfig implements Serializable {
      *
      * @return the value of field 'Timeout'.
      */
-    public int getTimeout() {
+    public Integer getTimeout() {
         return _timeout == null ? 3000 : _timeout;
     }
 
@@ -334,7 +335,7 @@ public class AmiConfig implements Serializable {
      *
      * @return the value of field 'UseSsl'.
      */
-    public boolean getUseSsl() {
+    public Boolean getUseSsl() {
         return _useSsl == null ? false : _useSsl;
     }
 
@@ -346,8 +347,8 @@ public class AmiConfig implements Serializable {
      *
      * @return the value of field 'Username'.
      */
-    public String getUsername() {
-        return this._username;
+    public Optional<String> getUsername() {
+        return Optional.ofNullable(this._username);
     }
 
     /**
@@ -493,7 +494,7 @@ public class AmiConfig implements Serializable {
      * @param port
      *            the value of field 'port'.
      */
-    public void setPort(final int port) {
+    public void setPort(final Integer port) {
         this._port = port;
     }
 
@@ -505,7 +506,7 @@ public class AmiConfig implements Serializable {
      * @param retry
      *            the value of field 'retry'.
      */
-    public void setRetry(final int retry) {
+    public void setRetry(final Integer retry) {
         this._retry = retry;
     }
 
@@ -517,7 +518,7 @@ public class AmiConfig implements Serializable {
      * @param timeout
      *            the value of field 'timeout'.
      */
-    public void setTimeout(final int timeout) {
+    public void setTimeout(final Integer timeout) {
         this._timeout = timeout;
     }
 
@@ -527,7 +528,7 @@ public class AmiConfig implements Serializable {
      * @param useSsl
      *            the value of field 'useSsl'.
      */
-    public void setUseSsl(final boolean useSsl) {
+    public void setUseSsl(final Boolean useSsl) {
         this._useSsl = useSsl;
     }
 

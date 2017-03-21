@@ -959,8 +959,8 @@ public final class BroadcastEventProcessor implements EventListener {
     }
     
     boolean userHasContactType(User user, String contactType, boolean allowEmpty) {
-        ConfigUtils.assertNotNull(user, "user");
-        ConfigUtils.assertNotNull(contactType, "contactType");
+        ConfigUtils.assertNotEmpty(user, "user");
+        ConfigUtils.assertNotEmpty(contactType, "contactType");
         boolean retVal = false;
         for (Contact c : user.getContacts()) {
             if (contactType.equalsIgnoreCase(c.getType())) {

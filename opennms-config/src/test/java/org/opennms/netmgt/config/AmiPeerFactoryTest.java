@@ -65,8 +65,6 @@ public class AmiPeerFactoryTest {
     }
 
     /**
-     * @throws MarshalException
-     * @throws ValidationException
      * @throws IOException 
      */
     @Test
@@ -85,19 +83,17 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
     }
 
     /**
      * This tests the merging of a new specific into a definition that already contains a specific
      * that is adjacent.  The two specifics should be converted to a single range in the definition.
      * 
-     * @throws MarshalException
-     * @throws ValidationException
      * @throws IOException 
      */
     @Test
@@ -117,17 +113,17 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("192.168.0.5", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("192.168.0.5", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
     }
 
     @Test
@@ -147,17 +143,17 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedb", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedc", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedb", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedc", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
     }
 
     @Test
@@ -177,17 +173,17 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedb%5", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedc%5", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedb%5", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedc%5", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
     }
 
     @Test
@@ -207,16 +203,16 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
         // No optimization should occur because the addresses have different scope IDs
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
     }
 
     /**
@@ -225,8 +221,6 @@ public class AmiPeerFactoryTest {
      * the single IP address that was in a different existing definition that will now be removed and the definition
      * deleted.
      * 
-     * @throws MarshalException
-     * @throws ValidationException
      * @throws IOException 
      */
     @Test
@@ -247,17 +241,17 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fed0%1", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedf%1", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fed0%1", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedf%1", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
     }
 
     /**
@@ -266,8 +260,6 @@ public class AmiPeerFactoryTest {
      * the single IP address that was in a different existing definition that will now be removed and the definition
      * deleted.
      * 
-     * @throws MarshalException
-     * @throws ValidationException
      * @throws IOException 
      */
     @Test
@@ -288,27 +280,25 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(2), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fed0%1", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:feda%1", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedb%2", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(1).getBegin());
-        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedf%2", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(1).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(2, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fed0%1", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:feda%1", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedb%2", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(1).getBegin());
+        assertEquals("fe80:0000:0000:0000:0000:0000:0000:fedf%2", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(1).getEnd());
     }
 
     /**
      * This tests the addition of a new specific definition that is the same address as the beginning of
      * a range in a current definition.
      * 
-     * @throws MarshalException
-     * @throws ValidationException
      * @throws IOException 
      */
     @Test
@@ -328,25 +318,23 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("192.168.0.12", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("192.168.0.12", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
     }
 
     /**
      * This tests the addition of a new specific definition that is the same address as the beginning of
      * a range in a current definition.
      * 
-     * @throws MarshalException
-     * @throws ValidationException
      * @throws IOException 
      */
     @Test
@@ -366,26 +354,24 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("192.168.0.12", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("192.168.0.12", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
     }
 
     /**
      * This tests the merging of a new definition that contains a range of IP addresses that overlaps
      * the end of one range and the beginning of another range in a current definition.
      * 
-     * @throws MarshalException
-     * @throws ValidationException
-     * @throws IOException 
+     * @throws IOException
      */
     @Test
     public void testOverlapsTwoRanges() throws IOException {
@@ -405,16 +391,16 @@ public class AmiPeerFactoryTest {
         AmiPeerFactory factory = AmiPeerFactory.getInstance();
         AmiPeerFactory.setAmiConfig(JaxbUtils.unmarshal(AmiConfig.class, amiConfigXml));
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(3), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(3, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
 
         factory.optimize();
 
-        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitionCount());
-        assertEquals(Integer.valueOf(0), AmiPeerFactory.getAmiConfig().getDefinition(0).getSpecificCount());
-        assertEquals(Integer.valueOf(1), AmiPeerFactory.getAmiConfig().getDefinition(0).getRangeCount());
-        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getBegin());
-        assertEquals("192.168.0.100", AmiPeerFactory.getAmiConfig().getDefinition(0).getRange(0).getEnd());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().size());
+        assertEquals(0, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getSpecifics().size());
+        assertEquals(1, AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().size());
+        assertEquals("192.168.0.6", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getBegin());
+        assertEquals("192.168.0.100", AmiPeerFactory.getAmiConfig().getDefinitions().get(0).getRanges().get(0).getEnd());
     }
 }

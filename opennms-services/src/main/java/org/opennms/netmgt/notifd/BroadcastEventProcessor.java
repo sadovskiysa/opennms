@@ -61,6 +61,7 @@ import org.opennms.netmgt.config.notificationCommands.Command;
 import org.opennms.netmgt.config.notifications.Notification;
 import org.opennms.netmgt.config.users.Contact;
 import org.opennms.netmgt.config.users.User;
+import org.opennms.netmgt.config.utils.ConfigUtils;
 import org.opennms.netmgt.eventd.EventUtil;
 import org.opennms.netmgt.events.api.EventConstants;
 import org.opennms.netmgt.events.api.EventIpcManager;
@@ -318,7 +319,7 @@ public final class BroadcastEventProcessor implements EventListener {
                 return;
             }
             final AutoAcknowledgeAlarm autoAck = getNotifdConfigManager().getConfiguration().getAutoAcknowledgeAlarm().get();
-            if (!autoAck.getUeis().isEmpty() && !autoAck.getUeis().contains(event.getUei())) {
+            if (autoAck.getUeis().isEmpty() || !autoAck.getUeis().contains(event.getUei())) {
                 return;
             }
             Collection<Integer> notifIDs = getNotificationManager().acknowledgeNoticeBasedOnAlarms(event);
@@ -901,21 +902,19 @@ public final class BroadcastEventProcessor implements EventListener {
 
         User user = getUserManager().getUser(targetName);
 
-        Command[] commands = new Command[commandList.length];
-        for (int i = 0; i < commandList.length; i++) {
-            commands[i] = getNotificationCommandManager().getCommand(commandList[i]);
-            if (commands[i] != null && commands[i].getContactType() != null) {
-                if (! userHasContactType(user, commands[i].getContactType().orElse(null))) {
-                    LOG.warn("User {} lacks contact of type {} which is required for notification command {} on notice #{}. Scheduling task anyway.", user.getUserId(), commands[i].getContactType(), commands[i].getName(), noticeId);
-                }
-            }
-        }
-
-        // if either piece of information is missing don't add the task to
-        // the notifier
         if (user == null) {
             LOG.error("user {} is not a valid user, not adding this user to escalation thread", targetName);
             return null;
+        }
+
+        Command[] commands = new Command[commandList.length];
+        for (int i = 0; i < commandList.length; i++) {
+            commands[i] = getNotificationCommandManager().getCommand(commandList[i]);
+            if (commands[i] != null && commands[i].getContactType().isPresent()) {
+                if (! userHasContactType(user, commands[i].getContactType().get())) {
+                    LOG.warn("User {} lacks contact of type {} which is required for notification command {} on notice #{}. Scheduling task anyway.", user.getUserId(), commands[i].getContactType(), commands[i].getName(), noticeId);
+                }
+            }
         }
 
         task.setUser(user);
@@ -960,6 +959,8 @@ public final class BroadcastEventProcessor implements EventListener {
     }
     
     boolean userHasContactType(User user, String contactType, boolean allowEmpty) {
+        ConfigUtils.assertNotNull(user, "user");
+        ConfigUtils.assertNotNull(contactType, "contactType");
         boolean retVal = false;
         for (Contact c : user.getContacts()) {
             if (contactType.equalsIgnoreCase(c.getType())) {
